@@ -10,6 +10,6 @@ namespace ScoreModifier
     {
         Osuv1,
         Function,
-
+        TotalFunction,
     }
 }

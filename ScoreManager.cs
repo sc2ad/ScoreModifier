@@ -49,6 +49,10 @@ namespace ScoreModifier
 
         private void Controller_noteWasCutEvent(NoteData noteData, NoteCutInfo info, int multiplier)
         {
+            if (noteData.noteType == NoteType.Bomb)
+            {
+                Plugin.Misses++;
+            }
             if (info.allIsOK)
             {
                 int scoreBeforeCut, scoreAfterCut, scoreDistance;

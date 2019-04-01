@@ -24,13 +24,13 @@ namespace ScoreModifier
 
         public void OnApplicationStart()
         {
-            if (IllusionInjector.PluginManager.Plugins.Any(x => x.Name.Equals("HTTP Status")))
+            if (IllusionInjector.PluginManager.Plugins.Any(x => x.Name.Equals("Data Wrappers")))
             {
                 SceneManager.activeSceneChanged += SceneManagerOnActiveSceneChanged;
                 SceneManager.sceneLoaded += SceneManager_sceneLoaded;
             } else
             {
-                SimpleFileLogger.Log("Could not find HTTP Status Plugin! Make sure this Plugin also exists!");
+                BS_Utils.Utilities.Logger.Log(Constants.Name, "Could not find Data Wrappers Plugin! Make sure this Plugin is installed correctly!");
             }
         }
 
@@ -46,6 +46,9 @@ namespace ScoreModifier
                 if (oldScene.name.Equals("GameCore"))
                 {
                     // Went from GameCore to MenuCore
+                    if (Config.scoreType == ScoreType.TotalFunction) {
+                        CustomScore = Config.getTotalScore();
+                    }
                     new GameObject("Viewer").AddComponent<ResultsViewer>();
                 }
             }

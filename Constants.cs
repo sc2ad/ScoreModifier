@@ -9,6 +9,6 @@ namespace ScoreModifier
     class Constants
     {
         public static string Name = "Score Modifer";
-        public static string Version = "0.0.2";
+        public static string Version = "0.0.3";
     }
 }

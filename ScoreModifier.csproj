@@ -41,10 +41,6 @@
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Beat Saber\Plugins\BeatSaberCustomUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="BeatSaberDataWrappers">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Beat Saber\Plugins\BeatSaberDataWrappers.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="BS_Utils">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Beat Saber\Plugins\BS_Utils.dll</HintPath>
       <Private>False</Private>

@@ -1,4 +1,4 @@
-﻿using BeatSaberDataWrappers;
+﻿using BS_Utils.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,12 +44,12 @@ namespace ScoreModifier
         public static Func<int, int> getDeltaScore = (int lastScore) =>
         {
             // The score for a given swing is your overall accuracy * score + 0.1 * score
-            return (int)((Data.accuracy * lastScore) + (0.1f * lastScore));
+            return (int)((BS_Utils.Plugin.dataManager.data.accuracy * lastScore) + (0.1f * lastScore));
         };
         public static Func<int> getTotalScore = () =>
         {
             // The overall score is your final score multiplied by your accuracy
-            return (int)(Data.accuracy * Data.finalScore);
+            return (int)(BS_Utils.Plugin.dataManager.data.accuracy * BS_Utils.Plugin.dataManager.data.finalScore);
         };
     }
 }

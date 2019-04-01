@@ -22,7 +22,7 @@ namespace ScoreModifier.UI
         public static void CreateSettingsUI()
         {
             //This will create a menu tab in the settings menu for your plugin
-            var pluginSettingsSubmenu = SettingsUI.CreateSubMenu("Score Modifications");
+            var pluginSettingsSubmenu = SettingsUI.CreateSubMenu(Constants.Name);
 
             var enabled = pluginSettingsSubmenu.AddBool("Enabled");
             enabled.GetValue += delegate { return Config.enabled; };

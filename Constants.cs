@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace ScoreModifier
 {
-    enum ScoreType
+    class Constants
     {
-        Osuv1,
-        Function,
-
+        public static string Name = "Score Modifer";
+        public static string Version = "0.0.2";
     }
 }

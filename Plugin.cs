@@ -24,8 +24,14 @@ namespace ScoreModifier
 
         public void OnApplicationStart()
         {
-            SceneManager.activeSceneChanged += SceneManagerOnActiveSceneChanged;
-            SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+            if (IllusionInjector.PluginManager.Plugins.Any(x => x.Name.Equals("HTTP Status")))
+            {
+                SceneManager.activeSceneChanged += SceneManagerOnActiveSceneChanged;
+                SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+            } else
+            {
+                SimpleFileLogger.Log("Could not find HTTP Status Plugin! Make sure this Plugin also exists!");
+            }
         }
 
         private void SceneManagerOnActiveSceneChanged(Scene oldScene, Scene newScene)
@@ -34,7 +40,7 @@ namespace ScoreModifier
             {
                 return;
             }
-            if (newScene.name == "MenuCore")
+            if (newScene.name.Equals("MenuCore"))
             {
                 //Code to execute when entering The Menu
                 if (oldScene.name.Equals("GameCore"))
@@ -44,7 +50,7 @@ namespace ScoreModifier
                 }
             }
 
-            if (newScene.name == "GameCore")
+            if (newScene.name.Equals("GameCore"))
             {
                 //Code to execute when entering actual gameplay
                 new GameObject("Score Listener").AddComponent<ScoreManager>();
@@ -54,8 +60,10 @@ namespace ScoreModifier
         private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode arg1)
         {
             //Create GameplayOptions/SettingsUI if using either
-            if (scene.name == "MenuCore")
+            if (scene.name.Equals("MenuCore"))
+            {
                 UI.BasicUI.CreateUI();
+            }
 
         }
 

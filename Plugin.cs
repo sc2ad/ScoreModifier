@@ -14,12 +14,13 @@ namespace ScoreModifier
 {
     public class Plugin : IPlugin
     {
-        public string Name => "ScoreModifier";
-        public string Version => "0.0.1";
+        public string Name => Constants.Name;
+        public string Version => Constants.Version;
 
         public static int CustomScore;
         public static int CurrentCombo;
         public static int BestCombo;
+        public static int Misses;
 
         public void OnApplicationStart()
         {

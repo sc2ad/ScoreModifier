@@ -17,6 +17,7 @@ namespace ScoreModifier
             Plugin.CustomScore = 0;
             Plugin.CurrentCombo = 0;
             Plugin.BestCombo = 0;
+            Plugin.Misses = 0;
             StartCoroutine(GrabController());
         }
         IEnumerator GrabController()
@@ -28,7 +29,13 @@ namespace ScoreModifier
         void Init()
         {
             controller.noteWasCutEvent += Controller_noteWasCutEvent;
+            controller.noteWasMissedEvent += Controller_noteWasMissedEvent;
             controller.comboDidChangeEvent += Controller_comboDidChangeEvent;
+        }
+
+        private void Controller_noteWasMissedEvent(NoteData arg1, int arg2)
+        {
+            Plugin.Misses++;
         }
 
         private void Controller_comboDidChangeEvent(int combo)
@@ -52,10 +59,16 @@ namespace ScoreModifier
                     case ScoreType.Osuv1:
                         Plugin.CustomScore += score + score * Math.Max(Plugin.CurrentCombo - 1, 0);
                         break;
+                    case ScoreType.Function:
+                        Plugin.CustomScore += Config.customScoreFunc(controller, score, noteData, info);
+                        break;
                     default:
                         Plugin.CustomScore += score * multiplier;
                         break;
                 }
+            } else
+            {
+                Plugin.Misses++;
             }
         }
     }

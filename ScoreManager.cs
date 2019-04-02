@@ -84,7 +84,7 @@ namespace ScoreModifier
                 switch (Config.scoreType)
                 {
                     case ScoreType.Osuv1:
-                        Plugin.CustomScore += score + score * Math.Max(Plugin.CurrentCombo - 1, 0);
+                        Plugin.CustomScore += score + (int) (score * Math.Max(Plugin.CurrentCombo - 1, 0) / Config.customScoreComboScale);
                         break;
                     case ScoreType.Function:
                         Plugin.CustomScore += Config.customScoreFunc(controller, score, noteData, info);

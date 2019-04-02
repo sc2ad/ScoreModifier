@@ -32,6 +32,17 @@ namespace ScoreModifier
                 config.SetString(Constants.Name, "ScoreType", value.ToString());
             }
         }
+        public static float customScoreComboScale
+        {
+            get
+            {
+                return config.GetFloat(Constants.Name, "CustomScoreComboScale", 25);
+            }
+            set
+            {
+                config.SetFloat(Constants.Name, "CustomScoreComboScale", value);
+            }
+        }
         public static Func<ScoreController, int, NoteData, NoteCutInfo, int> customScoreFunc = (ScoreController sc, int score, NoteData data, NoteCutInfo info) =>
         {
             // Example for accessing ScoreController, although eventually will convert to using HTTPStatus

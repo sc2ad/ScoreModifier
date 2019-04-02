@@ -16,7 +16,7 @@ namespace ScoreModifier
         private const int tries = 20;
         private const float delayTime = 0.1f;
 
-        private const float scoreXOffset = -0.2f;
+        private const float scoreXOffset = -0.5f;
         private const float scoreYOffset = 2.75f;
         private const float scoreZOffset = 2.5f;
 
@@ -70,7 +70,7 @@ namespace ScoreModifier
             GameObject labelGO = new GameObject("LabelViewer | " + label);
             labelGO.SetActive(false);
             TextMeshPro labelTM = viewer.AddComponent<TextMeshPro>();
-            labelTM.text = Plugin.CustomScore.ToString();
+            labelTM.text = "Custom Score";
             labelTM.fontSize = 3;
             labelTM.alignment = TextAlignmentOptions.Center;
             labelTM.rectTransform.parent = text.rectTransform;

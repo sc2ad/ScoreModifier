@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 namespace ScoreModifier
@@ -11,6 +12,9 @@ namespace ScoreModifier
     class ScoreManager : MonoBehaviour
     {
         private ScoreController controller;
+
+        private Vector3 scorePosition = new Vector3(-2f, 2.75f, 2.5f);
+        private TextMeshPro text;
         
         void Awake()
         {
@@ -31,6 +35,25 @@ namespace ScoreModifier
             controller.noteWasCutEvent += Controller_noteWasCutEvent;
             controller.noteWasMissedEvent += Controller_noteWasMissedEvent;
             controller.comboDidChangeEvent += Controller_comboDidChangeEvent;
+
+            GameObject viewer = new GameObject("ScoreManager | CustomScore");
+            viewer.SetActive(false);
+            text = viewer.AddComponent<TextMeshPro>();
+            text.text = Plugin.CustomScore.ToString();
+            text.fontSize = 3;
+            text.alignment = TextAlignmentOptions.Center;
+            text.rectTransform.position = scorePosition;
+            viewer.SetActive(true);
+
+            GameObject labelGO = new GameObject("ScoreManager | CustomScoreLabel");
+            labelGO.SetActive(false);
+            TextMeshPro labelTM = viewer.AddComponent<TextMeshPro>();
+            labelTM.text = "Custom Score";
+            labelTM.fontSize = 3;
+            labelTM.alignment = TextAlignmentOptions.Center;
+            labelTM.rectTransform.parent = text.rectTransform;
+            labelTM.rectTransform.localPosition = scorePosition;
+            labelGO.SetActive(true);
         }
 
         private void Controller_noteWasMissedEvent(NoteData arg1, int arg2)
@@ -74,6 +97,7 @@ namespace ScoreModifier
             {
                 Plugin.Misses++;
             }
+            text.text = Plugin.CustomScore.ToString();
         }
     }
 }

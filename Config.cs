@@ -41,10 +41,10 @@ namespace ScoreModifier
             // If you miss even a single note, you no longer get any points for the remainder of the song. Otherwise, you get 1 point per successful note.
             return misses == 0 ? 1 : 0;
         };
-        public static Func<int, int> getDeltaScore = (int lastScore) =>
+        public static Func<int, int> getDeltaScore = (int swingScore) =>
         {
             // The score for a given swing is your overall accuracy * score + 0.1 * score
-            return (int)((BS_Utils.Plugin.dataManager.data.accuracy * lastScore) + (0.1f * lastScore));
+            return (int)((BS_Utils.Plugin.dataManager.data.accuracy * swingScore) + (0.1f * swingScore));
         };
         public static Func<int> getTotalScore = () =>
         {

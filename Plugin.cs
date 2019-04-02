@@ -65,7 +65,7 @@ namespace ScoreModifier
             //Create GameplayOptions/SettingsUI if using either
             if (scene.name.Equals("MenuCore"))
             {
-                UI.BasicUI.CreateUI();
+                //UI.BasicUI.CreateUI();
             }
 
         }

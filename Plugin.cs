@@ -1,4 +1,7 @@
-﻿using System;
+﻿using IPA;
+using IPA.Config;
+using IPA.Utilities;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -7,12 +10,16 @@ using System.Media;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using IllusionPlugin;
+using IPALogger = IPA.Logging.Logger;
 
 
 namespace ScoreModifier
 {
-    public class Plugin : IPlugin
+    internal static class Logger
+    {
+        public static IPALogger log { get; set; }
+    }
+    public class Plugin : IBeatSaberPlugin
     {
         public string Name => Constants.Name;
         public string Version => Constants.Version;
@@ -22,77 +29,77 @@ namespace ScoreModifier
         public static int BestCombo;
         public static int Misses;
 
-        public void OnApplicationStart()
+        internal static Ref<PluginConfig> config;
+        internal static IConfigProvider configProvider;
+
+        public void Init(IPALogger logger, [Config.Prefer("json")] IConfigProvider cfgProvider)
         {
-            if (IllusionInjector.PluginManager.Plugins.Any(x => x.Name.Equals("Data Wrappers")))
+            Logger.log = logger;
+            configProvider = cfgProvider;
+
+            config = cfgProvider.MakeLink<PluginConfig>((p, v) =>
             {
-                SceneManager.activeSceneChanged += SceneManagerOnActiveSceneChanged;
-                SceneManager.sceneLoaded += SceneManager_sceneLoaded;
-            } else
-            {
-                BS_Utils.Utilities.Logger.Log(Constants.Name, "Could not find Data Wrappers Plugin! Make sure this Plugin is installed correctly!");
-            }
+                if (v.Value == null || v.Value.RegenerateConfig)
+                    p.Store(v.Value = new PluginConfig() { RegenerateConfig = false });
+                config = v;
+            });
         }
 
-        private void SceneManagerOnActiveSceneChanged(Scene oldScene, Scene newScene)
+        public void OnApplicationStart()
         {
-            if (!Config.enabled)
+            Logger.log.Debug("OnApplicationStart");
+        }
+
+        public void OnApplicationQuit()
+        {
+            Logger.log.Debug("OnApplicationQuit");
+        }
+
+        public void OnFixedUpdate()
+        {
+
+        }
+
+        public void OnUpdate()
+        {
+
+        }
+
+        public void OnActiveSceneChanged(Scene prevScene, Scene nextScene)
+        {
+            if (!config.Value.Enabled)
             {
                 return;
             }
-            if (newScene.name.Equals("MenuCore"))
+            if (nextScene.name.Equals("MenuCore"))
             {
                 //Code to execute when entering The Menu
-                if (oldScene.name.Equals("GameCore"))
+                if (prevScene.name.Equals("GameCore"))
                 {
                     // Went from GameCore to MenuCore
-                    if (Config.scoreType == ScoreType.TotalFunction) {
-                        CustomScore = Config.getTotalScore();
+                    if (config.Value.scoreType == ScoreType.TotalFunction)
+                    {
+                        CustomScore = PluginConfig.getTotalScore();
                     }
                     new GameObject("Viewer").AddComponent<ResultsViewer>();
                 }
             }
 
-            if (newScene.name.Equals("GameCore"))
+            if (nextScene.name.Equals("GameCore"))
             {
                 //Code to execute when entering actual gameplay
                 new GameObject("Score Listener").AddComponent<ScoreManager>();
             }
         }
 
-        private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode arg1)
-        {
-            //Create GameplayOptions/SettingsUI if using either
-            if (scene.name.Equals("MenuCore"))
-            {
-                //UI.BasicUI.CreateUI();
-            }
-
-        }
-
-        public void OnApplicationQuit()
-        {
-            SceneManager.activeSceneChanged -= SceneManagerOnActiveSceneChanged;
-            SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
-        }
-
-        public void OnLevelWasLoaded(int level)
+        public void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
         {
 
         }
 
-        public void OnLevelWasInitialized(int level)
-        {
-        }
-
-        public void OnUpdate()
+        public void OnSceneUnloaded(Scene scene)
         {
 
-
-        }
-
-        public void OnFixedUpdate()
-        {
         }
     }
 }

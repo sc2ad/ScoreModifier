@@ -81,13 +81,13 @@ namespace ScoreModifier
                 int scoreBeforeCut, scoreAfterCut, scoreDistance;
                 ScoreController.ScoreWithoutMultiplier(info, null, out scoreBeforeCut, out scoreAfterCut, out scoreDistance);
                 int score = scoreAfterCut - scoreBeforeCut;
-                switch (Config.scoreType)
+                switch (Plugin.config.Value.scoreType)
                 {
                     case ScoreType.Osuv1:
-                        Plugin.CustomScore += score + (int) (score * Math.Max(Plugin.CurrentCombo - 1, 0) / Config.customScoreComboScale);
+                        Plugin.CustomScore += score + (int) (score * Math.Max(Plugin.CurrentCombo - 1, 0) / Plugin.config.Value.customScoreComboScale);
                         break;
                     case ScoreType.Function:
-                        Plugin.CustomScore += Config.customScoreFunc(controller, score, noteData, info);
+                        Plugin.CustomScore += PluginConfig.customScoreFunc(controller, score, noteData, info);
                         break;
                     default:
                         Plugin.CustomScore += score * multiplier;

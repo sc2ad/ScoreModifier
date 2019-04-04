@@ -1,0 +1,12 @@
+﻿{
+	"$schema": "https://raw.githubusercontent.com/nike4613/ModSaber-MetadataFileSchema/master/Schema.json",
+	"author": "Sc2ad",
+	"description": "A mod to modify and customize scoring functionality.",
+	"gameVersion": "0.13.1",
+	"id": "score-modifier",
+	"name": "Score Modifier",
+	"version": "0.0.3",
+	"features": [
+		"no-update"
+	]
+}

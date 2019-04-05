@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace ScoreModifier
 {
@@ -13,6 +14,12 @@ namespace ScoreModifier
         public bool Enabled = true;
         public ScoreType scoreType = ScoreType.Osuv1;
         public float customScoreComboScale = 25;
+
+        public Vector3 scorePositionInGame = new Vector3(-2f, 2.75f, 2.5f);
+        public float yScoreLabelOffsetInGame = 0f;
+
+        public Vector3 scorePositionAfterGame = new Vector3(-0.5f, 2.75f, 2.5f);
+        public float yScoreLabelOffsetAfterGame = 0f;
 
         public static Func<ScoreController, int, NoteData, NoteCutInfo, int> customScoreFunc = (ScoreController sc, int score, NoteData data, NoteCutInfo info) =>
         {

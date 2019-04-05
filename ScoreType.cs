@@ -9,6 +9,7 @@ namespace ScoreModifier
     enum ScoreType
     {
         Osuv1,
+        Test1,
         Function,
         TotalFunction,
     }

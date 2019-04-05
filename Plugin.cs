@@ -43,6 +43,7 @@ namespace ScoreModifier
                     p.Store(v.Value = new PluginConfig() { RegenerateConfig = false });
                 config = v;
             });
+            logger.Debug("Initialize Complete!");
         }
 
         public void OnApplicationStart()
@@ -67,6 +68,7 @@ namespace ScoreModifier
 
         public void OnActiveSceneChanged(Scene prevScene, Scene nextScene)
         {
+            Logger.log.Debug("OnActiveSceneChanged ScoreModifierMod: " + prevScene + " to " + nextScene);
             if (!config.Value.Enabled)
             {
                 return;
@@ -79,6 +81,7 @@ namespace ScoreModifier
                     // Went from GameCore to MenuCore
                     if (config.Value.scoreType == ScoreType.TotalFunction)
                     {
+                        Logger.log.Info("Using TotalScoreFunction!");
                         CustomScore = PluginConfig.getTotalScore();
                     }
                     new GameObject("Viewer").AddComponent<ResultsViewer>();
